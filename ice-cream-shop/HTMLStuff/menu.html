@@ -1,0 +1,177 @@
+<!-- Christina DiMaggio, Leonidas Kesaris, and James Black
+Data Base Management Systems 
+12/9/2024
+Final Project: In the project a Node JS server takes request from the html files, and modifys SQL DBwith queries within.
+-->
+
+
+<!--MENU-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Ice Cream Dream</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Header styling */
+        header {
+            background-color: #00eaff;
+            padding: 20px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        header h1 {
+            margin: 0;
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+        }
+        /* User info on the top-right */
+        #user-info {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            color: white;
+        }
+        /* Product list styling */
+        #menu {
+            padding: 20px;
+            text-align: center;
+        }
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Ice Cream Dream Menu</h1>
+        <nav>
+            <!--Links to the other webpages of the site-->
+            <a href="index.html">Home</a>
+            <a href="login.html">Login</a>
+            <a href="/logout" id="logout">Logout</a>
+        </nav>
+        <span id="user-info"></span> <!-- User info insert -->
+    </header>
+
+    <section id="menu">
+        <h2>Our Menu</h2>
+        <div class="product-list">
+        </div>
+    </section>
+
+    <!--Function for loading ice cream data from server for display-->
+    <script>
+        async function loadIceCreams() {
+            try {
+                //fetch ice creams with api call
+                const response = await fetch('/api/icecreams');
+                const icecreams = await response.json();
+                const productContainer = document.querySelector(".product-list");
+
+                // no icecream? give message no icecream
+                if (icecreams.length === 0) {
+                    productContainer.innerHTML = '<p>No ice creams available.</p>';
+                    return;
+                }
+
+                // allows us to have the stock and price be up tp date with the database: shows data from db
+                icecreams.forEach(icecream => {
+                    const icecreamDiv = document.createElement("div");
+                    icecreamDiv.classList.add("product");
+                    icecreamDiv.innerHTML = `
+                        <h3>${icecream.Name}</h3>
+                        <p>${icecream.Description}</p>
+                        <p><strong>$${icecream.Price}</strong></p>
+                        <p>Stock: ${icecream.Stock}</p>
+                        <button onclick="buyIceCream(${icecream.IceCreamID}, 1, ${icecream.Stock})">Buy Now</button>
+                    `;
+                    productContainer.appendChild(icecreamDiv);
+                });
+            } catch (error) {
+                console.error("Error loading ice creams:", error);
+            }
+        }
+
+        // asyncronous function to see if there is a current logged in users
+        async function checkUserLogin() {
+            const response = await fetch('/api/user');//get data 
+            const user = await response.json();
+
+            // logged in then show their Name and remove login option
+            if (user && user.username) {
+                document.getElementById('user-info').innerText = `Hello, ${user.username}`;
+                document.querySelector('a[href="login.html"]').style.display = 'none'; // Hide login link
+            } else {
+                // User is not logged in, show login link
+                document.querySelector('a[href="login.html"]').style.display = 'inline-block';
+            }
+        }
+
+        //fiunction for buying icecream
+        async function buyIceCream(iceCreamID, quantity, stock) {
+            if (quantity > stock) {
+                alert('Not enough stock available! Buy something else!');
+                return;
+            }
+
+            // Check if user is logged in
+            const response = await fetch('/api/user');
+            const user = await response.json();
+            const customerId = user.username ? 1 : null;
+
+            if (!customerId) {
+                alert('Login before you make a purchase please !');
+                return;
+            }
+            // order data created and has the ice creams arrayand shipping to contain IceCreamID quantity and shipping info
+            const orderData = {
+                icecreams: [{ IceCreamID: iceCreamID, quantity: quantity }],
+                shipping: {
+                    shippingMethod: "Standard",
+                    shippingCost: 5.00,
+                    shippingAddress: "123 Main St",
+                    city: "Sample",
+                    state: "PA",
+                    zipCode: "19003"
+                }
+            };
+
+            //uses fetch to contact buy endpoint to get the order data which is turned into a string
+            try {
+                const response = await fetch('/buy', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(orderData)// convert order datat to string and send
+                });
+                const data = await response.json();
+                alert(data.message);// show server message 
+            } catch (error) {
+                console.error('Error placing order:', error);// console logging
+                alert('An error occurred while placing the order.');
+            }
+        }
+
+        // load ice creams and check for the users login when they open the page.
+        loadIceCreams();
+        checkUserLogin();
+    </script>
+</body>
+</html>

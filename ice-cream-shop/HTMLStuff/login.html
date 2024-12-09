@@ -1,0 +1,149 @@
+<!-- Christina DiMaggio, Leonidas Kesaris, and James Black
+Data Base Management Systems 
+12/9/2024
+Final Project: In the project a Node JS server takes request from the html files, and modifys SQL DBwith queries within.
+-->
+
+
+<!--LOGIN-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ice Dream Login</title>
+
+    <style>
+        /* General styling */
+        body {
+            font-family: 'Arial', sans-serif; 
+            background-color: #84caec; /* Light pastel background keep using this one! */
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Main container for the login form */
+        .container {
+            max-width: 400px; 
+            margin: 100px auto; 
+            padding: 30px;
+            background-color: #12e0d2; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); 
+            background: linear-gradient(135deg, #e3f2fd, #f8bbd0); /* Pastel gradient background */
+        }
+
+        h1 {
+            text-align: center; 
+            color: #3d5a80; 
+            font-size: 2.5em; 
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block; 
+            margin: 10px 0 5px; 
+            color: #5c6bc0; 
+            font-weight: bold;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%; 
+            padding: 12px; 
+            margin: 8px 0 20px 0; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; /* Rounded input fields */
+            background-color: #f4f6f9; 
+            font-size: 1em;
+        }
+
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #b3e5fc; 
+            background-color: #e1f5fe; 
+        }
+
+        button {
+            width: 100%; 
+            padding: 15px; 
+            background-color: #ffb3e6; /* Soft pastel pink keep using this one */
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #ff80c0; 
+        }
+
+        p {
+            text-align: center; 
+            font-size: 14px; 
+            color: #5c6bc0; 
+        }
+
+        a {
+            color: #ff80c0; 
+            text-decoration: none; 
+        }
+
+        a:hover {
+            text-decoration: underline; 
+        }
+
+        .logged-in {
+            text-align: center;
+            font-size: 16px;
+            color: #ff80c0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Ice Dream Login</h1>
+
+        <!-- message if the user is logged in -->
+        <div class="logged in">
+            <p id="welcome_message"></p>
+        </div>
+
+        <!-- sends data to the server using POST method -->
+        <form action="/login" method="POST">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required placeholder="Enter your email">
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required placeholder="Enter your password">
+
+            <button type="submit">Login</button>
+        </form>
+
+        <!-- link to  signup page -->
+        <p>Don't have an account with Ice Dream? <a href="/signup">Sign up here</a></p>
+    </div>
+
+    <script>
+        // get username from the server and update the page
+        fetch('/api/user')
+            .then(response => response.json())
+            .then(data => {
+                const welcomeMessage = document.getElementById('welcome-message');
+                if (data.username) {
+                    // User is logged in, show their username
+                    welcomeMessage.textContent = `Welcome back to Ice Crea Dream!, ${data.username}!`;
+                } else {
+                    // User is not logged in, show the login form
+                    welcomeMessage.textContent = 'Please log in to continue.';}})
+            .catch(error => {
+                console.error('Error fetching user data:', error);});
+    </script>
+
+</body>
+</html>

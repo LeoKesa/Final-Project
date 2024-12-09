@@ -1,0 +1,315 @@
+/* Christina DiMaggio, Leonidas Kesaris, and James Black
+Data Base Management Systems 
+ 12/9/2024
+Final Project: In the project a Node JS server takes request from the html files, and modifys SQL DBwith queries within. 
+
+STYLE 
+*/
+
+body {
+        font-family: 'Arial', sans-serif;  /* Use a clean sans-serif font */
+        background-image: url("https://static.vecteezy.com/system/resources/previews/037/236/438/non_2x/ai-generated-beautuful-ice-cream-background-with-copy-space-free-photo.jpg");    /* Local image path */
+        background-size: cover;  
+        background-position: center center; 
+        background-attachment: fixed; /* Make the background image fixed while scrolling */
+        color: white; 
+        line-height: 1.6;
+        height: 100%;
+        background-repeat: no-repeat;  /* Prevent image from repeating */
+        height: 100vh;
+    }
+
+header {
+    margin: 0;
+    padding: 150px;
+    text-align: center;
+}
+
+
+header h1 {
+    font-size: 8em;
+    color: white;
+    margin-bottom: 20px;
+    }
+
+/* Navigation bar */
+header nav {
+    display: flex;
+    justify-content: center;  /* Center the navigation links */
+    margin-top: 10px;
+}
+
+header nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-size: 2em;
+}
+
+header nav a:hover {
+    background-color: #575757;
+}
+
+/* Welcome Section */
+#welcome {
+    text-align: center;
+    padding: 50px;
+    background-color: #3db0bb;
+    margin-top: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#welcome h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 10px;  /* Adds space between heading and paragraph */
+}
+
+#welcome p {
+    font-size: 1.2rem;
+    color: #555;
+    margin-top: 10px;
+}
+
+/* Section Styling (Login Form) */
+section#login {
+    background-color: #fff; 
+    padding: 30px; 
+    border-radius: 10px; 
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
+    width: 300px; 
+    text-align: center; 
+
+}
+
+/* Form Title (Login) */
+section#login h2 {
+    font-size: 2em;
+    color: #333; /* Darker color for the form title */
+    margin-bottom: 20px;
+}
+
+/* Input Fields Styling */
+input[type="text"], input[type="password"] {
+    width: 100%; 
+    padding: 10px; 
+    margin: 10px 0; 
+    border: 1px solid #ddd; 
+    border-radius: 5px; 
+    font-size: 1em;
+}
+
+input[type="text"]:focus, input[type="password"]:focus {
+    border-color: #ff6347; 
+    outline: none; /* Remove outline on focus */
+}
+
+/* Button Styling */
+button[type="submit"] {
+    width: 100%; 
+    padding: 10px;
+    background-color: #ff6347; 
+    border: none; 
+    border-radius: 5px; 
+    font-size: 1.2em;
+    color: white;
+    cursor: pointer; /* Pointer cursor on hover */
+    margin-top: 10px;
+}
+
+button[type="submit"]:hover {
+    background-color: #e55347; /* Darker color on hover */
+}
+
+/* Link Styling (Sign up) */
+section#login p {
+    font-size: 1em;
+    margin-top: 20px; /* Add space between the button and the text */
+}
+
+section#login a {
+    text-decoration: none;
+    color: #ff6347; /* Link color matching the button */
+}
+
+section#login a:hover {
+    text-decoration: underline;
+}
+
+/* Navigation styling */
+#menu_header nav {
+    display: flex;
+    justify-content: left; /* Align items to the left */
+}
+
+#menu_header nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-size: 1.1rem;
+}
+
+#menu_header nav a:hover {
+    background-color: #575757;
+}
+
+/* Menu Section */
+#menu {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#menu h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: left; /* Align menu title to the left */
+}
+
+.product-list {
+    display: flex;
+    flex-direction: column; /* Stack products vertically */
+}
+
+.product {
+    background-color: #fafafa;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+}
+
+.product h3 {
+    font-size: 1.5rem;
+    color: #333;
+    text-align: left; /* Align product name to the left */
+}
+
+.product p {
+    font-size: 1.1rem;
+    color: #555;
+    text-align: left; /* Align product details to the left */
+}
+
+.product button {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.product button:hover {
+    background-color: #575757;
+}
+
+/* Admin Section Styling */
+#admin {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#admin h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+/* Styling for table headers */
+th {
+    background-color: #333; /* Dark background for the table header */
+    color: white; /* White text in table header */
+    font-weight: 600;
+}
+
+/* Table Row Styling */
+tr:nth-child(even) {
+    background-color: #f9f9f9; /* Light gray background for even rows */
+}
+
+tr:hover {
+    background-color: #f1f1f1; /* Highlight row on hover */
+}
+
+/* Form Input and Button Styling */
+form input[type="number"] {
+    padding: 8px;
+    font-size: 1rem;
+    width: 150px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+}
+
+form input[type="number"]:focus {
+    border-color: #333;
+}
+
+form button {
+    padding: 8px 12px;
+    font-size: 1rem;
+    background-color: #4CAF50; /* Green background for buttons */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+/* Responsive Design for smaller screens */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem; /* Adjust the font size for smaller screens */
+    }
+
+    #admin {
+        padding: 10px;
+    }
+
+    table, th, td {
+        font-size: 0.9rem; /* Adjust table font size for smaller screens */
+    }
+
+    form input[type="number"] {
+        width: 100%; /* Make the input fields responsive */
+    }
+
+    form button {
+        width: 100%; /* Make the buttons full width on small screens */
+    }
+}
+/* Footer Styling */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}

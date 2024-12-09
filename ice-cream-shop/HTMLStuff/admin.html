@@ -1,0 +1,48 @@
+<!-- Christina DiMaggio, Leonidas Kesaris, and James Black
+Data Base Management Systems 
+12/9/2024
+Final Project: In the project a Node JS server takes request from the html files, and modifys SQL DBwith queries within.
+-->
+
+<!--ADMIN-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel - Ice Cream Shop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Ice Cream Shop - Admin Panel</h1>
+    </header>
+
+    <section id="admin">
+
+        <!--Stock modifier and User deleter funcitonality-->
+        <h2>Manage Inventory or Delete a User by Entering Respective ID:</h2>
+
+        <h3>Update Stock</h3>
+        <!--uses update_stock to post request to server on the route. Gets IceCreamID and new stock-->
+        <form action="/update_stock" method="POST">
+            <label for="IceCreamID">Ice Cream ID:</label>
+            <input type="number" id="IceCreamID" name="IceCreamID" placeholder="Enter Ice Cream ID" required>
+            <!--input for the IceCreamID which will be modified.-->
+            <label for="stock">New Stock Quantity:</label>
+            <input type="number" id="stock" name="stock" placeholder="Enter new stock" min="0" required>
+            <!-- input for new level of stock-->
+            <button type="submit">Update Stock</button>
+        </form>
+
+        <!--user deletion section-->
+        <h3>USER DELETE</h3>
+        <!--Post request to delete_user route so admin can enter user ID to be deleted-->
+        <form action="/delete_user" method="POST">
+            <label for="userID">User ID:</label>
+            <input type="number" id="userID" name="userID" placeholder="Enter User ID" required>
+            <button type="submit">Delete User!</button>
+        </form>
+    </section>
+</body>
+</html>

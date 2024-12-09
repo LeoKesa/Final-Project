@@ -1,0 +1,123 @@
+<!-- Christina DiMaggio, Leonidas Kesaris, and James Black
+Data Base Management Systems 
+12/9/2024
+Final Project: In the project a Node JS server takes request from the html files, and modifys SQL DBwith queries within.
+-->
+<!--SIGNUP-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Signup</title>
+
+    <!-- Internal CSS for styling the page -->
+    <style>
+        /* General styles to make the page look nice */
+        body {
+            font-family: Arial, sans-serif; 
+            background-color: #d720d4; 
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Main container to center everything on the page */
+        .container {
+            max-width: 600px; 
+            margin: 50px auto; 
+            padding: 20px;
+            background-color: rgb(107, 232, 246); 
+            border-radius: 8px; 
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /*make the signup visible*/
+        h1 {
+            text-align: center; 
+            color: white; 
+        }
+
+        /* Style for the form labels to make them stand out */
+        label {
+            display: block; 
+            margin: 10px 0 5px; 
+            color: #555; 
+        }
+
+        /* Styling the form inputs for better usability */
+        input[type="email"],
+        input[type="password"],
+        input[type="text"] {
+            width: 100%; 
+            padding: 10px; 
+            margin: 5px 0 20px 0; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            box-sizing: border-box; 
+        }
+
+        /* Styling the submit button */
+        button {
+            width: 100%; 
+            padding: 15px; 
+            background-color: #af4caa; 
+            color: white; 
+            border: none; 
+            border-radius: 4px; 
+            font-size: 16px; 
+            cursor: pointer; 
+        }
+
+        /* Hover effect for the submit button */
+        button:hover {
+            background-color: #45a049; 
+        }
+        
+        p {
+            text-align: center; 
+            font-size: 14px; 
+        }
+
+        a {
+            color: #4eaf4c; 
+            text-decoration: none; 
+        }
+
+        a:hover {
+            text-decoration: underline; 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+      
+        <h1>Signup</h1>
+        
+        <form action="/signup" method="POST">
+            
+            <!-- Input fields for all required email and user attributes.  -->
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required placeholder="Enter your email">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required placeholder="Enter your password">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required placeholder="Enter your full name">
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone" name="phone" required placeholder="Enter your phone number">
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" required placeholder="Enter your address">
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" required placeholder="Enter your city">
+            <label for="state">State:</label>
+            <input type="text" id="state" name="state" required placeholder="Enter your state">
+            <label for="zipCode">Zip Code:</label>
+            <input type="text" id="zipCode" name="zipCode" required placeholder="Enter your zip code">
+            <button type="submit">Sign Up</button>
+        </form>
+    </div>
+</body>
+</html>
